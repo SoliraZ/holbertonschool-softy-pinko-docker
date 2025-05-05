@@ -6,8 +6,8 @@ services:
       context: ./front-end
       dockerfile: Dockerfile
     image: softy-pinko-front-end:latest
-    ports:
-      - "9000:9000"
+    expose:
+      - "9000"
     depends_on:
       - back-end
 
@@ -16,5 +16,16 @@ services:
       context: ./back-end
       dockerfile: Dockerfile
     image: softy-pinko-back-end:latest
+    expose:
+      - "5252"
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: softy-pinko-proxy:latest
     ports:
-      - "5252:5252"
+      - "80:80"
+    depends_on:
+      - front-end
+      - back-end
