@@ -1,9 +1,19 @@
-FROM nginx:latest
+FROM ubuntu:latest
 
-COPY softy-pinko-front-end /var/www/html/softy-pinko-front-end
+WORKDIR /app
 
-COPY softy-pinko-front-end.conf /etc/nginx/conf.d/default.conf
+COPY . /app/
 
-EXPOSE 9000
+RUN apt-get update && apt-get install -y
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN apt-get install -y python3
+
+RUN apt-get install -y python3-pip
+
+RUN rm /usr/lib/python*/EXTERNALLY-MANAGED
+
+RUN pip3 install flask
+
+EXPOSE 5252
+
+CMD ["python3" , "api.py"]
