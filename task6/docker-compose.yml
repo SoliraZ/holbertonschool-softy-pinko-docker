@@ -18,6 +18,10 @@ services:
     image: softy-pinko-back-end:latest
     expose:
       - "5252"
+    deploys:
+      replicas: 2
+      restart_policy:
+        condition: any
 
   proxy:
     build:
