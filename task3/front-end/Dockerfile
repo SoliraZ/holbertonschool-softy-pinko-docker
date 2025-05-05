@@ -1,16 +1,6 @@
-FROM ubuntu:latest
+FROM nginx:latest
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y python3 python3-pip
-RUN rm /usr/lib/python*/EXTERNALLY-MANAGED
-RUN pip3 install flask
-RUN pip3 install flask flask-cors
+COPY ./softy-pinko-front-end /var/www/html/softy-pinko-front-end
+COPY ./softy-pinko-front-end.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /app
-
-COPY ./api.py /app/api.py
-
-EXPOSE 5252
-
-# Command to run the Flask app.
-CMD ["python3", "api.py"]
+EXPOSE 9000
